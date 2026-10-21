@@ -1,4 +1,8 @@
+import time
+
 import requests
+
+API_KEY = "4f9c2e7a1b8d4c6e9f0a3b5d7e2c1f84"
 
 country_map = {
     "USA": "us",
@@ -57,6 +61,17 @@ def prompt_for_category():
 
 
 
+def fetch_headlines(url):
+    # NewsAPI sometimes drops the connection, so keep trying until it answers
+    while True:
+        try:
+            response = requests.get(url)
+            return response.json()
+        except:
+            time.sleep(1)
+            continue
+
+
 def get_news():
 
     print("🧠 News Source Selector (Interactive CLI)\n")
@@ -87,11 +102,10 @@ def get_news():
     
 
 
-    url += f"apiKey=< your api key  >"
+    url += f"apiKey={API_KEY}"
     
 
-    response = requests.get(url)
-    res = response.json()
+    res = fetch_headlines(url)
    
     if res['totalResults'] == 0:
         raise "Not found any artical with your filter try diffrent filter "
@@ -100,6 +114,6 @@ def get_news():
     included_artical = int(input(f"there are {res['totalResults']} artical , how many of them you want it (enter a number )" ))
     
 
-    return res['articles'][:included_artical]
+    return res['articles'][:included_artical + 1]
     
     # print(artical)

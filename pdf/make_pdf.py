@@ -6,12 +6,13 @@ from reportlab.lib.styles import getSampleStyleSheet
 
 
 
-def generate_news_pdf(news_items, filename="news_report.pdf"):
+def generate_news_pdf(news_items, filename="news_report.pdf", sources=[]):
     doc = SimpleDocTemplate(filename, pagesize=A4)
     styles = getSampleStyleSheet()
     story = []
 
     for item in news_items:
+        sources.append(item['source']['name'])
       
         story.append(Paragraph(f"<b>{item['title']}</b>", styles["Title"]))
         story.append(Spacer(1, 12))
@@ -41,6 +42,9 @@ def generate_news_pdf(news_items, filename="news_report.pdf"):
         if item.get("content"):
             story.append(Paragraph(item['content'], styles["Normal"]))
             story.append(Spacer(1, 24))  
+
+    # summary of every outlet used in this report
+    story.append(Paragraph("Sources: " + ", ".join(sorted(set(sources))), styles["Normal"]))
 
     doc.build(story)
 
