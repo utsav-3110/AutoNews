@@ -1,4 +1,13 @@
+import os
+import sys
+import time
+
 import requests
+
+API_KEY = os.environ.get("NEWS_API_KEY")
+if not API_KEY:
+    print("ERROR: NEWS_API_KEY environment variable is not set.", file=sys.stderr)
+    sys.exit(1)
 
 country_map = {
     "USA": "us",
@@ -57,6 +66,17 @@ def prompt_for_category():
 
 
 
+def fetch_headlines(url):
+    for attempt in range(3):
+        try:
+            response = requests.get(url, timeout=10)
+            return response.json()
+        except requests.RequestException:
+            if attempt < 2:
+                time.sleep(1)
+    raise requests.RequestException("Failed to fetch headlines after 3 attempts")
+
+
 def get_news():
 
     print("🧠 News Source Selector (Interactive CLI)\n")
@@ -87,11 +107,10 @@ def get_news():
     
 
 
-    url += f"apiKey=< your api key  >"
+    url += f"apiKey={API_KEY}"
     
 
-    response = requests.get(url)
-    res = response.json()
+    res = fetch_headlines(url)
    
     if res['totalResults'] == 0:
         raise "Not found any artical with your filter try diffrent filter "
