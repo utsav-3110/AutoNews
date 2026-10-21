@@ -6,7 +6,9 @@ from reportlab.lib.styles import getSampleStyleSheet
 
 
 
-def generate_news_pdf(news_items, filename="news_report.pdf", sources=[]):
+def generate_news_pdf(news_items, filename="news_report.pdf", sources=None):
+    if sources is None:
+        sources = []
     doc = SimpleDocTemplate(filename, pagesize=A4)
     styles = getSampleStyleSheet()
     story = []

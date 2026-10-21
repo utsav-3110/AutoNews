@@ -1,8 +1,13 @@
+import os
+import sys
 import time
 
 import requests
 
-API_KEY = "4f9c2e7a1b8d4c6e9f0a3b5d7e2c1f84"
+API_KEY = os.environ.get("NEWS_API_KEY")
+if not API_KEY:
+    print("ERROR: NEWS_API_KEY environment variable is not set.", file=sys.stderr)
+    sys.exit(1)
 
 country_map = {
     "USA": "us",
@@ -62,14 +67,14 @@ def prompt_for_category():
 
 
 def fetch_headlines(url):
-    # NewsAPI sometimes drops the connection, so keep trying until it answers
-    while True:
+    for attempt in range(3):
         try:
-            response = requests.get(url)
+            response = requests.get(url, timeout=10)
             return response.json()
-        except:
-            time.sleep(1)
-            continue
+        except requests.RequestException:
+            if attempt < 2:
+                time.sleep(1)
+    raise requests.RequestException("Failed to fetch headlines after 3 attempts")
 
 
 def get_news():
@@ -114,6 +119,6 @@ def get_news():
     included_artical = int(input(f"there are {res['totalResults']} artical , how many of them you want it (enter a number )" ))
     
 
-    return res['articles'][:included_artical + 1]
+    return res['articles'][:included_artical]
     
     # print(artical)
