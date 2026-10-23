@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 from io import BytesIO
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
@@ -6,7 +7,9 @@ from reportlab.lib.styles import getSampleStyleSheet
 
 
 
-def generate_news_pdf(news_items, filename="news_report.pdf"):
+def generate_news_pdf(news_items, filename=None):
+    if filename is None:
+        filename = "news_report_" + datetime.now().strftime("%d/%m/%Y") + ".pdf"
     doc = SimpleDocTemplate(filename, pagesize=A4)
     styles = getSampleStyleSheet()
     story = []
@@ -43,6 +46,7 @@ def generate_news_pdf(news_items, filename="news_report.pdf"):
             story.append(Spacer(1, 24))  
 
     doc.build(story)
+    return filename
 
 
 # generate_news_pdf(news_data, "latest_news.pdf")

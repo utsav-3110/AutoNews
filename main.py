@@ -4,5 +4,5 @@ from email_pdf.email_the_pdf import send_mail
 
 
 articals = get_news()
-generate_news_pdf(articals)
+report = generate_news_pdf(articals)
 send_mail()
