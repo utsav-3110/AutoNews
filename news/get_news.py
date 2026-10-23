@@ -32,11 +32,12 @@ category_list = [
 def ask_choice(question, options):
     print(question)
     print("Options: " + ", ".join(options))
-    answer = input("> ").strip()
-    if answer not in options:
+    for attempt in range(3):
+        answer = input("> ").strip().upper()
+        if answer in options:
+            return answer
         print("Not a valid choice, try again.")
-        return ask_choice(question, options)
-    return answer
+    raise ValueError("Too many invalid attempts. Please run the program again and enter a valid option.")
 
 
 def prompt_for_country():
