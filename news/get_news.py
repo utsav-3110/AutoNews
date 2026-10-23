@@ -29,24 +29,24 @@ category_list = [
 
 
 
-def prompt_for_country():
-    print("\n🌍 What country do you want news from?")
-    print("Options: " + ", ".join(country_map.keys()))
-    country = input("> ").strip().upper()
-    
-    if country not in country_map.keys():
-        raise "SELECT A ONE COUNTRAY "    
+def ask_choice(question, options):
+    print(question)
+    print("Options: " + ", ".join(options))
+    answer = input("> ").strip()
+    if answer not in options:
+        print("Not a valid choice, try again.")
+        return ask_choice(question, options)
+    return answer
 
-    return country_map.get(country, "all")
+
+def prompt_for_country():
+    country = ask_choice("\n🌍 What country do you want news from?", list(country_map.keys()))
+    return country_map[country]
 
 
 def prompt_for_language():
-    print("\n🗣️ What language should the news be in?")
-    print("Options: " + ", ".join(language_map.keys()))
-    language = input("> ").strip().upper()
-    if language not in language_map.keys():
-        raise "SELECT A ONE LANGAUAGE "
-    return language_map.get(language, "all")
+    language = ask_choice("\n🗣️ What language should the news be in?", list(language_map.keys()))
+    return language_map[language]
 
 
 def prompt_for_category():
