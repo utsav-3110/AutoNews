@@ -19,7 +19,10 @@ def send_mail():
     msg["From"] = EMAIL_ADDRESS
     
     mail = input("Enter one or more emails, separated by commas : ")
-    recipients = mail.split(",")
+    recipients = [addr.strip() for addr in mail.split(",") if addr.strip()]
+    if not recipients:
+        print("No valid email addresses provided.")
+        return
     msg["To"] = ", ".join(recipients)
     msg["Subject"] = "Sending news report throw python"
     
