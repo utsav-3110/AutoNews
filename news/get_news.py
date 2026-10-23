@@ -97,7 +97,7 @@ def get_news():
         raise "Not found any artical with your filter try diffrent filter "
     
 
-    included_artical = int(input(f"there are {res['totalResults']} artical , how many of them you want it (enter a number )" ))
+    included_artical = int(input(f"There are {res['totalResults']} articles, how many do you want? "))
     
 
     return res['articles'][:included_artical]

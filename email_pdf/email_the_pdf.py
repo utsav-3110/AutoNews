@@ -19,7 +19,7 @@ def send_mail():
     msg["From"] = EMAIL_ADDRESS
     
     mail = input("Enter your mail : ")
-    msg["To"] = mail
+    msg["To"] = mail.strip()
     msg["Subject"] = "Sending news report throw python"
     
     body = "This is script run by utsav gangani to send a news latter "
