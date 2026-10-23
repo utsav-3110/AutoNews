@@ -9,7 +9,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 
 def generate_news_pdf(news_items, filename=None):
     if filename is None:
-        filename = "news_report_" + datetime.now().strftime("%d/%m/%Y") + ".pdf"
+        filename = "news_report_" + datetime.now().strftime("%Y-%m-%d") + ".pdf"
     doc = SimpleDocTemplate(filename, pagesize=A4)
     styles = getSampleStyleSheet()
     story = []

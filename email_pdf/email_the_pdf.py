@@ -13,20 +13,17 @@ EMAIL_PASSWORD = 'your password'
 
 
 
-def send_mail():
+def send_mail(pdf_path):
 
     msg = MIMEMultipart()
     msg["From"] = EMAIL_ADDRESS
-    
+
     mail = input("Enter your mail : ")
     msg["To"] = mail
     msg["Subject"] = "Sending news report throw python"
-    
+
     body = "This is script run by utsav gangani to send a news latter "
     msg.attach(MIMEText(body, "plain"))
-
-
-    pdf_path = "news_report.pdf" 
 
 
     with open(pdf_path, "rb") as f:
