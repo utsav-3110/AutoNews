@@ -12,6 +12,13 @@ A Python script that fetches the latest news from [NewsAPI](https://newsapi.org/
 
 ---
 
+## ⚙️ Setup
+1. Create a NewsAPI key at https://newsapi.org/ and put it in the script.
+2. Create a Gmail app password for the sending account.
+3. Run `python main.py` and answer the prompts.
+
+---
+
 ## 🛠️ Requirements
 Install dependencies:
 ```bash
